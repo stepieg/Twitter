@@ -68,6 +68,27 @@ class User
         }
         return null;
     }
+    static public function loadUserByEmail(PDO $conn, $email)
+    {
+        $stmt = $conn->prepare('SELECT * FROM users WHERE email=:email');
+        try {
+            $stmt->execute([
+                'email' => $email,
+            ]);
+        } catch (PDOException $exception) {
+            throw new \Exception('Wystąpił błąd podczas pobierania uzytkownika');
+        }
+        if ($stmt->rowCount() > 0) {
+            $row = $stmt->fetch();
+            $loadedUser = new User();
+            $loadedUser->id = $row['id'];
+            $loadedUser->userName = $row['username'];
+            $loadedUser->hashPass = $row['hash_pass'];
+            $loadedUser->email = $row['email'];
+            return $loadedUser;
+        }
+        return null;
+    }
     static public function loadAllUsers(PDO $conn) {
         $result = [];
         try {
