@@ -4,12 +4,16 @@ include('./header.php');
 
 $testUser = new User();
 
-$testUser->setEmail('test@o2.pl')->setHashPass('haslo')->setUserName('Nowak')->saveToDB($conn);
+$testUser->setEmail('test@o22.pl')->setHashPass('haslo')->setUserName('Nowak')->saveToDB($conn);
 
 var_dump($testUser);
 
-$testUser->setUserName('Kowalski')->setHashPass('noweHaslo')->setEmail('aaa@onet.pl')->saveToDB($conn);
+$testUser->setUserName('Kowalski')->setHashPass('noweHaslo')->setEmail('aaaa@onet.pl')->saveToDB($conn);
 
 var_dump($testUser);
+
+sleep(60);
+
+$testUser->delete($conn);
 
 include('./footer.php');

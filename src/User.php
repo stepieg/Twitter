@@ -124,4 +124,22 @@ class User
         }
         return $result;
     }
+    public function delete(PDO $conn)
+    {
+        if (-1 === $this->id) {
+            return false;
+        }
+        $stmt = $conn->prepare('DELETE FROM users WHERE id=:id');
+        try {
+            $result = $stmt->execute([
+                'id' => $this->id
+            ]);
+        } catch (PDOException $exception) {
+            throw new \Exception('Wystąpił błąd podczas usuwania użytkownika');
+        }
+        if ($result) {
+            $this->id = -1;
+            return true;
+        }
+    }
 }
